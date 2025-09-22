@@ -27,7 +27,6 @@ function addTask() {
         saveTasks();
     };
 
-    
     updateSelectBackgroundColor(moveSelect, "todo");
 
     let deleteBtn = document.createElement("button");
@@ -38,28 +37,28 @@ function addTask() {
         saveTasks();
     };
 
-    task.appendChild(taskContent);
-    task.appendChild(moveSelect);
-    task.appendChild(deleteBtn);
+    const taskOptions = document.createElement("div");
+    taskOptions.className = "task-options";
+    taskOptions.appendChild(moveSelect);
+    taskOptions.appendChild(deleteBtn);
 
-    
+    task.appendChild(taskContent);
+    task.appendChild(taskOptions);
+
     document.getElementById("todo").appendChild(task);
     taskInput.value = "";
 
     saveTasks();
 }
 
-
 function allowDrop(event) {
     event.preventDefault();
 }
-
 
 function drag(event) {
     event.dataTransfer.setData("text", event.target.id);
     event.target.classList.add("dragging");
 }
-
 
 function drop(event) {
     event.preventDefault();
@@ -70,7 +69,6 @@ function drop(event) {
         saveTasks();
     }
 }
-
 
 function saveTasks() {
     const tasks = document.querySelectorAll(".task");
@@ -84,7 +82,6 @@ function saveTasks() {
 
     localStorage.setItem("tasks", JSON.stringify(taskData));
 }
-
 
 function loadTasks() {
     const taskData = JSON.parse(localStorage.getItem("tasks"));
@@ -115,7 +112,6 @@ function loadTasks() {
                 saveTasks();
             };
 
-            
             updateSelectBackgroundColor(moveSelect, task.status);
 
             let deleteBtn = document.createElement("button");
@@ -126,11 +122,14 @@ function loadTasks() {
                 saveTasks();
             };
 
-            taskElement.appendChild(taskContent);
-            taskElement.appendChild(moveSelect);
-            taskElement.appendChild(deleteBtn);
+            const taskOptions = document.createElement("div");
+            taskOptions.className = "task-options";
+            taskOptions.appendChild(moveSelect);
+            taskOptions.appendChild(deleteBtn);
 
-            
+            taskElement.appendChild(taskContent);
+            taskElement.appendChild(taskOptions);
+
             document.getElementById(task.status).appendChild(taskElement);
         });
     }
@@ -145,10 +144,10 @@ function updateSelectBackgroundColor(selectElement, value) {
             selectElement.style.backgroundColor = "#ecc07e";
             break;
         case "review":
-            selectElement.style.backgroundColor = "#ccb7b7";
+            selectElement.style.backgroundColor = "#f3f16c";
             break;
         case "done":
-            selectElement.style.backgroundColor = "#9fe2af";
+            selectElement.style.backgroundColor = "#3dec66";
             break;
     }
 }
